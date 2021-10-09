@@ -29,3 +29,26 @@ ranks = ranks.sort_values(['Winner', 'Runners_Up', 'Third', 'Fourth'], ascending
 
 
 print(ranks)
+
+ranks = preprocess.ranks
+
+# x축에 그려질 막대그래프들의 위치입니다.
+x = np.array(list(range(0, len(ranks))))
+
+# 그래프를 그립니다.
+fig, ax = plt.subplots()
+
+# x 위치에, 항목 이름으로 ranks.index(국가명)을 붙입니다.
+plt.xticks(x, ranks.index, rotation=90)
+plt.tight_layout()
+
+# 4개의 막대를 차례대로 그립니다.
+ax.bar(x - 0.3, ranks['Winner'],     color = 'gold',   width = 0.2, label = 'Winner')
+ax.bar(x - 0.1, ranks['Runners_Up'], color = 'silver', width = 0.2, label = 'Runners_Up')
+ax.bar(x + 0.1, ranks['Third'],      color = 'brown',  width = 0.2, label = 'Third')
+ax.bar(x + 0.3, ranks['Fourth'],     color = 'black',  width = 0.2, label = 'Fourth')
+
+
+
+plt.savefig("image.svg", format="svg")
+
