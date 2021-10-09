@@ -16,3 +16,12 @@ goal_per_country = pd.DataFrame(columns=['countries', 'goals'])
 goal_per_country = goal_per_country.append(home.rename(columns={'Home Team Name': 'countries', 'Home Team Goals': 'goals'}))
 goal_per_country = goal_per_country.append(away.rename(columns={'Away Team Name': 'countries', 'Away Team Goals': 'goals'}))
 goal_per_country = goal_per_country.groupby(['countries'])['goals'].sum().sort_values(ascending=False)
+world_cups_matches = world_cups_matches[world_cups_matches['Year']==2014]
+home_team_goal = world_cups_matches.groupby(['Home Team Name'])['Home Team Goals'].sum()
+away_team_goal = world_cups_matches.groupby(['Away Team Name'])['Away Team Goals'].sum()
+team_goal_2014 = pd.concat([home_team_goal, away_team_goal], axis=1)
+team_goal_2014 = team_goal_2014.fillna(0)
+team_goal_2014['goals'] = team_goal_2014['Home Team Goals'] + team_goal_2014['Away Team Goals']
+team_goal_2014 = team_goal_2014.drop(['Home Team Goals', 'Away Team Goals'], axis=1)
+team_goal_2014 = team_goal_2014['goals'].sort_values(ascending=False)
+team_goal_2014.astype('int')
