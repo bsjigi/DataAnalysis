@@ -27,3 +27,22 @@ goal_per_country = goal_per_country.append(away.rename(columns={'Away Team Name'
 goal_per_country = goal_per_country.groupby(['countries'])['goals'].sum().sort_values(ascending=False)
 goal_per_country = goal_per_country.astype(int)
 print(goal_per_country)
+
+oal_per_country = preprocess.goal_per_country
+goal_per_country = goal_per_country[:10]
+
+# x, y값 저장
+x = goal_per_country.index
+y = goal_per_country.values
+
+#그래프 그리기
+fig, ax = plt.subplots()
+
+ax.bar(x, y, width = 0.5)
+
+# x축 항목 이름 지정, 30도 회전
+plt.xticks(x, rotation=30)
+plt.tight_layout()
+
+#그래프 출력
+plt.savefig("image.svg", format="svg")
